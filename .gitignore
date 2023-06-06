@@ -1,0 +1,4 @@
+#Ignorar archivos .o y .exe
+
+*.o
+*.exe
