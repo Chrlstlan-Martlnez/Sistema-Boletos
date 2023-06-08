@@ -4,8 +4,9 @@ uses
 	crt;
 
 var 
-	Nombre, Apellido, Cedula, NombreBoleto, Transporte : string;
-	OpcionUsuario, nBoletos, nBoletosTotal, i, TipoBoleto, nViajesBoleto,
+	Nombre, Apellido, Cedula, NombreBoleto, NroBoletoUsuario, Transporte, SubEstacionS, SubEstacionD : string;
+	MostrarSubestaciones : AnsiString;
+	OpcionUsuario, nBoletos, nBoletosTotal, i, TipoBoleto, nViajesBoleto, nPagLinea, ElegirLinea, 
 	n1, n2a, n2b, n3, n4a, n4b, n5, n6a, n6b, n7, n8a, n8b, n9a, n9b, n9c, n10a, n10b, n10c : integer;
 	MontoTotal : real;
 
@@ -238,6 +239,341 @@ begin
 				writeln('                                                     -------------------------');
 					
 				write('Presiona Enter para continuar'); readln();
+				
+				clrscr;
+				writeln('Ahora que ya ha seleccionado sus boletos, debe seleccionar la linea en la cual desea viajar.');
+				writeln('Dentro de cada linea debe elegir una subestacion de salida y una subestacion de destino.');
+				writeln('Este proceso lo debe realizar para cada uno de sus boletos, piense bien cuales seran sus viajes.');
+				write('Presiona Enter para continuar'); readln();
+				
+				clrscr;
+				writeln('A continuacion se le iran mostrando las lineas en las que puede viajar junto con sus subestaciones una por una.');
+				writeln('Elija la linea en la que desea viajar, y luego elija las subestaciones de salida y destino.');
+				write('Presiona Enter para continuar'); readln();
+
+
+				MostrarSubestaciones := 'Sus subestaciones elegidas :';
+				
+				for i:=1 to nBoletos do
+					begin
+						str(i, NroBoletoUsuario);
+						
+						ElegirLinea := 0;
+						nPagLinea := 1;
+						
+						while ElegirLinea = 0 do
+							begin
+								if nPagLinea = 1 then
+									begin
+										clrscr;
+										writeln('-------------                                                         ');
+										writeln('|  LINEA 1  |                                                         ');
+										writeln('----------------------------------------------------------------------');
+										writeln('|-Propatria     |-Capitolio       |-Sabana Grande   |-Los Cortijos   |');
+										writeln('|-Perez Bonalde |-La Hoyada       |-Chacaito        |-La California  |');
+										writeln('|-Plaza Sucre   |-Parque Carabobo |-Chacao          |-Petare         |');
+										writeln('|-Gato Negro    |-Bellas Artes    |-Altamira        |-Palo Verde     |');
+										writeln('|-Agua Salud    |-Colegio de ing  |-Miranda         |                |');
+										writeln('|-Cano Amarillo |-Plaza Venezuela |-Los Dos Caminos |                |');
+										writeln('----------------------------------------------------------------------');
+										writeln('Si desea utilizar su boleto ', i, ' para viajar en esta linea presione 1');
+										writeln('Si por el contrario desea ver otra linea junto son sus subestaciones');
+										writeln('Presione 2 para avanzar a la siguiente linea: '); readln(OpcionUsuario);
+										
+										case OpcionUsuario of
+											1:begin
+													writeln('Para utilizar su boleto ', i, ' en la linea 1, debe ingresar ambas SubEstaciones');
+													repeat
+														writeln('(Debe escribirlo igual a como lo ve arriba, en caso de escribirlo mal tendra otra oportunidad.)');
+														write('Ingrese el nombre de la estacion de salida: '); readln(SubEstacionS);
+														write('Ahora ingrese el nombre de la estacion de destino: '); readln(SubEstacionD);
+
+													until (((SubEstacionS = 'Propatria') or (SubEstacionS = 'Perez Bonalde') or (SubEstacionS = 'Plaza Sucre') or (SubEstacionS = 'Gato Negro') 
+													or (SubEstacionS = 'Agua Salud') or (SubEstacionS = 'Cano Amarillo') or (SubEstacionS = 'Capitolio') or (SubEstacionS = 'La Hoyada') 
+													or (SubEstacionS = 'Parque Carabobo') or (SubEstacionS = 'Bellas Artes') or (SubEstacionS = 'Colegio de ing') or (SubEstacionS = 'Plaza Venezuela') 
+													or (SubEstacionS = 'Sabana Grande') or (SubEstacionS = 'Chacaito') or (SubEstacionS = 'Chacao') or (SubEstacionS = 'Altamira') 
+													or (SubEstacionS = 'Miranda') or (SubEstacionS = 'Los Dos Caminos') or (SubEstacionS = 'Los Cortijos') or (SubEstacionS = 'La California') 
+													or (SubEstacionS = 'Petare') or (SubEstacionS = 'Palo Verde')) 
+													and ((SubEstacionD = 'Propatria') or (SubEstacionD = 'Perez Bonalde') or (SubEstacionD = 'Plaza Sucre') or (SubEstacionD = 'Gato Negro') 
+													or (SubEstacionD = 'Agua Salud') or (SubEstacionD = 'Cano Amarillo') or (SubEstacionD = 'Capitolio') or (SubEstacionD = 'La Hoyada') 
+													or (SubEstacionD = 'Parque Carabobo') or (SubEstacionD = 'Bellas Artes') or (SubEstacionD = 'Colegio de ing') or (SubEstacionD = 'Plaza Venezuela') 
+													or (SubEstacionD = 'Sabana Grande') or (SubEstacionD = 'Chacaito') or (SubEstacionD = 'Chacao') or (SubEstacionD = 'Altamira') 
+													or (SubEstacionD = 'Miranda') or (SubEstacionD = 'Los Dos Caminos') or (SubEstacionD = 'Los Cortijos') or (SubEstacionD = 'La California') 
+													or (SubEstacionD = 'Petare') or (SubEstacionD = 'Palo Verde')));
+													MostrarSubEstaciones := MostrarSubEstaciones + #13#10 + 'Boleto ' + NroBoletoUsuario + ': Desde ' + SubEstacionS + ' hasta ' + SubEstacionD;
+												
+													ElegirLinea := 1;
+													
+													write('Presiona Enter para continuar'); readln();
+												end;
+											2: nPagLinea := nPagLinea + 1;
+											end;
+									end;
+								if nPagLinea = 2 then
+									begin
+										clrscr;
+										writeln('             -------------                                            ');
+										writeln('             |  LINEA 2  |                                            ');
+										writeln('----------------------------------------------------------------------');
+										writeln('|-El Silencio  |-Artiguas     |-Carapita  |-Caricuao                 |');
+										writeln('|-Capuchinos   |-La Paz       |-Antimano  |-Zoologico                |');
+										writeln('|-Maternidad   |-La Yaguara   |-Mamera    |-Ruiz Pineda/Las Adjuntas |');
+										writeln('----------------------------------------------------------------------');
+										writeln('Si desea utilizar su boleto ', i, ' para viajar en esta linea presione 1');
+										writeln('Si por el contrario desea ver otra linea junto son sus subestaciones');
+										writeln('Presione 0 para ir a la linea anterior, o 2 para avanzar a la siguiente linea: '); readln(OpcionUsuario);
+										
+										case OpcionUsuario of
+											1:begin
+													writeln('Para utilizar su boleto ', i, ' en la linea 2, debe ingresar ambas SubEstaciones');
+													repeat
+														writeln('(Debe escribirlo igual a como lo ve arriba, en caso de escribirlo mal tendra otra oportunidad.)');
+														write('Ingrese el nombre de la estacion de salida: '); readln(SubEstacionS);
+														write('Ahora ingrese el nombre de la estacion de destino: '); readln(SubEstacionD);
+
+													until (((SubEstacionS = 'El Silencio') or (SubEstacionS = 'Capuchinos') or (SubEstacionS = 'Maternidad') or (SubEstacionS = 'Artiguas') 
+													or (SubEstacionS = 'La Paz') or (SubEstacionS = 'La Yaguara') or (SubEstacionS = 'Carapita') or (SubEstacionS = 'Antimano') 
+													or (SubEstacionS = 'Mamera') or (SubEstacionS = 'Caricuao') or (SubEstacionS = 'Zoologico') or (SubEstacionS = 'Ruiz Pineda/Las Adjuntas')) 
+													and ((SubEstacionD = 'El Silencio') or (SubEstacionD = 'Capuchinos') or (SubEstacionD = 'Maternidad') or (SubEstacionD = 'Artiguas') 
+													or (SubEstacionD = 'La Paz') or (SubEstacionD = 'La Yaguara') or (SubEstacionD = 'Carapita') or (SubEstacionD = 'Antimano') 
+													or (SubEstacionD = 'Mamera') or (SubEstacionD = 'Caricuao') or (SubEstacionD = 'Zoologico') or (SubEstacionD = 'Ruiz Pineda/Las Adjuntas')));
+													MostrarSubEstaciones := MostrarSubEstaciones + #13#10 + 'Boleto ' + NroBoletoUsuario + ': Desde ' + SubEstacionS + ' hasta ' + SubEstacionD;
+												
+													ElegirLinea := 1;
+													
+													write('Presiona Enter para continuar'); readln();
+												end;
+											0: nPagLinea := nPagLinea - 1;
+											2: nPagLinea := nPagLinea + 1;
+											end;
+									end;
+								if nPagLinea = 3 then
+									begin
+										clrscr;
+										writeln('                            -------------                             ');
+										writeln('                            |  LINEA 3  |                             ');
+										writeln('----------------------------------------------------------------------');
+										writeln('|-Plaza Venezuela      |-La Bandera     |-Los Jardines |-Mercado     |');
+										writeln('|-Ciudad Universitaria |-El Valle       |-Coche        |-La Rinconada|');
+										writeln('|-Los Simbolos         |                |              |             |');
+										writeln('----------------------------------------------------------------------');
+										writeln('Si desea utilizar su boleto ', i, ' para viajar en esta linea presione 1');
+										writeln('Si por el contrario desea ver otra linea junto son sus subestaciones');
+										writeln('Presione 0 para ir a la linea anterior, o 2 para avanzar a la siguiente linea: '); readln(OpcionUsuario);
+										
+										case OpcionUsuario of
+											1:begin
+													writeln('Para utilizar su boleto ', i, ' en la linea 3, debe ingresar ambas SubEstaciones');
+													repeat
+														writeln('(Debe escribirlo igual a como lo ve arriba, en caso de escribirlo mal tendra otra oportunidad.)');
+														write('Ingrese el nombre de la estacion de salida: '); readln(SubEstacionS);
+														write('Ahora ingrese el nombre de la estacion de destino: '); readln(SubEstacionD);
+
+													until (((SubEstacionS = 'Plaza Venezuela') or (SubEstacionS = 'Ciudad Universitaria') or (SubEstacionS = 'Los Simbolos') or (SubEstacionS = 'La Bandera') 
+													or (SubEstacionS = 'El Valle') or (SubEstacionS = 'Los Jardines') or (SubEstacionS = 'Coche') or (SubEstacionS = 'Mercado') 
+													or (SubEstacionS = 'La Rinconada')) 
+													and ((SubEstacionD = 'Plaza Venezuela') or (SubEstacionD = 'Ciudad Universitaria') or (SubEstacionD = 'Los Simbolos') or (SubEstacionD = 'La Bandera') 
+													or (SubEstacionD = 'El Valle') or (SubEstacionD = 'Los Jardines') or (SubEstacionD = 'Coche') or (SubEstacionD = 'Mercado') 
+													or (SubEstacionD = 'La Rinconada')));
+													MostrarSubEstaciones := MostrarSubEstaciones + #13#10 + 'Boleto ' + NroBoletoUsuario + ': Desde ' + SubEstacionS + ' hasta ' + SubEstacionD;
+												
+													ElegirLinea := 1;
+													
+													write('Presiona Enter para continuar'); readln();
+												end;
+											0: nPagLinea := nPagLinea - 1;
+											2: nPagLinea := nPagLinea + 1;
+											end;
+									end;
+								if nPagLinea = 4 then
+									begin
+										clrscr;
+										writeln('                                            -------------             ');
+										writeln('                                            |  LINEA 4  |             ');
+										writeln('----------------------------------------------------------------------');
+										writeln('|-Zona Rental    |-Capuchinos |-La Paz     |-Antimano                |');
+										writeln('|-Parque Central |-Maternidad |-La Yaragua |-Mamera                  |');
+										writeln('|-Nuevo Circo    |-Artigas    |-Carapita   |-Ruiz Pineda/Las Adjuntas|');
+										writeln('|-Teatros        |            |            |                         |');
+										writeln('----------------------------------------------------------------------');
+										writeln('Si desea utilizar su boleto ', i, ' para viajar en esta linea presione 1');
+										writeln('Si por el contrario desea ver otra linea junto son sus subestaciones');
+										writeln('Presione 0 para ir a la linea anterior, o 2 para avanzar a la siguiente linea: '); readln(OpcionUsuario);
+										
+										case OpcionUsuario of
+											1:begin
+													writeln('Para utilizar su boleto ', i, ' en la linea 4, debe ingresar ambas SubEstaciones');
+													repeat
+														writeln('(Debe escribirlo igual a como lo ve arriba, en caso de escribirlo mal tendra otra oportunidad.)');
+														write('Ingrese el nombre de la estacion de salida: '); readln(SubEstacionS);
+														write('Ahora ingrese el nombre de la estacion de destino: '); readln(SubEstacionD);
+
+													until (((SubEstacionS = 'Zona Rental') or (SubEstacionS = 'Parque Central') or (SubEstacionS = 'Nuevo Circo') or (SubEstacionS = 'Teatros') 
+													or (SubEstacionS = 'Capuchinos') or (SubEstacionS = 'Maternidad') or (SubEstacionS = 'Artigas') or (SubEstacionS = 'La Paz') 
+													or (SubEstacionS = 'La Yaragua') or (SubEstacionS = 'Carapita') or (SubEstacionS = 'Antimano') or (SubEstacionS = 'Mamera') 
+													or (SubEstacionS = 'Ruiz Pineda/Las Adjuntas')) 
+													and ((SubEstacionS = 'Zona Rental') or (SubEstacionS = 'Parque Central') or (SubEstacionS = 'Nuevo Circo') or (SubEstacionS = 'Teatros') 
+													or (SubEstacionS = 'Capuchinos') or (SubEstacionS = 'Maternidad') or (SubEstacionS = 'Artigas') or (SubEstacionS = 'La Paz') 
+													or (SubEstacionS = 'La Yaragua') or (SubEstacionS = 'Carapita') or (SubEstacionS = 'Antimano') or (SubEstacionS = 'Mamera') 
+													or (SubEstacionS = 'Ruiz Pineda/Las Adjuntas')));
+													MostrarSubEstaciones := MostrarSubEstaciones + #13#10 + 'Boleto ' + NroBoletoUsuario + ': Desde ' + SubEstacionS + ' hasta ' + SubEstacionD;
+												
+													ElegirLinea := 1;
+													
+													write('Presiona Enter para continuar'); readln();
+												end;
+											0: nPagLinea := nPagLinea - 1;
+											2: nPagLinea := nPagLinea + 1;
+											end;
+									end;
+								if nPagLinea = 5 then
+									begin
+										clrscr;
+										writeln('                                                         -------------');
+										writeln('                                                         |  LINEA 5  |');
+										writeln('----------------------------------------------------------------------');
+										writeln('|-Bello Monte          |-Bello Campo   |-Montecristo |-El Marquez    |');
+										writeln('|-Las Mercedes         |-Hugo Chavez   |-Boleita     |-Warairarepano |');
+										writeln('|-Parque Simon Bolivar |               |             |               |');
+										writeln('----------------------------------------------------------------------');
+										writeln('Si desea utilizar su boleto ', i, ' para viajar en esta linea presione 1');
+										writeln('Si por el contrario desea ver otra linea junto son sus subestaciones');
+										writeln('Presione 0 para ir a la linea anterior, o 2 para avanzar a la siguiente linea: '); readln(OpcionUsuario);
+										
+										case OpcionUsuario of
+											1:begin
+													writeln('Para utilizar su boleto ', i, ' en la linea 5, debe ingresar ambas SubEstaciones');
+													repeat
+														writeln('(Debe escribirlo igual a como lo ve arriba, en caso de escribirlo mal tendra otra oportunidad.)');
+														write('Ingrese el nombre de la estacion de salida: '); readln(SubEstacionS);
+														write('Ahora ingrese el nombre de la estacion de destino: '); readln(SubEstacionD);
+
+													until (((SubEstacionS = 'Bello Monte') or (SubEstacionS = 'Las Mercedes') or (SubEstacionS = 'Parque Simon Bolivar') or (SubEstacionS = 'Bello Campo') 
+													or (SubEstacionS = 'Hugo Chavez') or (SubEstacionS = 'Montecristo') or (SubEstacionS = 'Boleita') or (SubEstacionS = 'El Marquez') 
+													or (SubEstacionS = 'Warairarepano')) 
+													and ((SubEstacionD = 'Bello Monte') or (SubEstacionD = 'Las Mercedes') or (SubEstacionD = 'Parque Simon Bolivar') or (SubEstacionD = 'Bello Campo') 
+													or (SubEstacionD = 'Hugo Chavez') or (SubEstacionD = 'Montecristo') or (SubEstacionD = 'Boleita') or (SubEstacionD = 'El Marquez') 
+													or (SubEstacionD = 'Warairarepano')) );
+													MostrarSubEstaciones := MostrarSubEstaciones + #13#10 + 'Boleto ' + NroBoletoUsuario + ': Desde ' + SubEstacionS + ' hasta ' + SubEstacionD;
+												
+													ElegirLinea := 1;
+													
+													write('Presiona Enter para continuar'); readln();
+												end;
+											0: nPagLinea := nPagLinea - 1;
+											2: nPagLinea := nPagLinea + 1;
+											end;
+									end;
+								if nPagLinea = 6 then
+									begin
+										clrscr;
+										writeln('                                       -------------                  ');
+										writeln('                                       |  LINEA 6  |                  ');
+										writeln('----------------------------------------------------------------------');
+										writeln('|-Zoologico                       |-La Rinconada                     |');
+										writeln('----------------------------------------------------------------------');
+										writeln('Si desea utilizar su boleto ', i, ' para viajar en esta linea presione 1');
+										writeln('Si por el contrario desea ver otra linea junto son sus subestaciones');
+										writeln('Presione 0 para ir a la linea anterior, o 2 para avanzar a la siguiente linea: '); readln(OpcionUsuario);
+										
+										case OpcionUsuario of
+											1:begin
+													writeln('Para utilizar su boleto ', i, ' en la linea 6, debe ingresar ambas SubEstaciones');
+													repeat
+														writeln('(Debe escribirlo igual a como lo ve arriba, en caso de escribirlo mal tendra otra oportunidad.)');
+														write('Ingrese el nombre de la estacion de salida: '); readln(SubEstacionS);
+														write('Ahora ingrese el nombre de la estacion de destino: '); readln(SubEstacionD);
+
+													until (((SubEstacionS = 'Zoologico') or (SubEstacionS = 'La Rinconada')) 
+													and ((SubEstacionD = 'Zoologico') or (SubEstacionD = 'La Rinconada')));
+													MostrarSubEstaciones := MostrarSubEstaciones + #13#10 + 'Boleto ' + NroBoletoUsuario + ': Desde ' + SubEstacionS + ' hasta ' + SubEstacionD;
+												
+													ElegirLinea := 1;
+													
+													write('Presiona Enter para continuar'); readln();
+												end;
+											0: nPagLinea := nPagLinea - 1;
+											2: nPagLinea := nPagLinea + 1;
+											end;
+									end;
+								if nPagLinea = 7 then
+									begin
+										clrscr;
+										writeln('                  -------------                                       ');
+										writeln('                  |  LINEA 7  |                                       ');
+										writeln('----------------------------------------------------------------------');
+										writeln('|-Las Flores    |-La Hoyada    |-Presidente Medina    |-La Bandera   |');
+										writeln('|-Panteon       |-El Cristo    |-INCES                |-Los Ilustres |');
+										writeln('|-Socorro       |-Roca Tarpeya |-Roosevelt            |              |');
+										writeln('----------------------------------------------------------------------');
+										writeln('Si desea utilizar su boleto ', i, ' para viajar en esta linea presione 1');
+										writeln('Si por el contrario desea ver otra linea junto son sus subestaciones');
+										writeln('Presione 0 para ir a la linea anterior, o 2 para avanzar a la siguiente linea: '); readln(OpcionUsuario);
+										
+										case OpcionUsuario of
+											1:begin
+													writeln('Para utilizar su boleto ', i, ' en la linea 7, debe ingresar ambas SubEstaciones');
+													repeat
+														writeln('(Debe escribirlo igual a como lo ve arriba, en caso de escribirlo mal tendra otra oportunidad.)');
+														write('Ingrese el nombre de la estacion de salida: '); readln(SubEstacionS);
+														write('Ahora ingrese el nombre de la estacion de destino: '); readln(SubEstacionD);
+
+													until (((SubEstacionS = 'Las Flores') or (SubEstacionS = 'Panteon') or (SubEstacionS = 'Socorro') or (SubEstacionS = 'La Hoyada') 
+													or (SubEstacionS = 'El Cristo') or (SubEstacionS = 'Roca Tarpeya') or (SubEstacionS = 'Presidente Medina') or (SubEstacionS = 'INCES') 
+													or (SubEstacionS = 'Roosevelt') or (SubEstacionS = 'La Bandera') or (SubEstacionS = 'Los Ilustres')) 
+													and ((SubEstacionD = 'Las Flores') or (SubEstacionD = 'Panteon') or (SubEstacionD = 'Socorro') or (SubEstacionD = 'La Hoyada') 
+													or (SubEstacionD = 'El Cristo') or (SubEstacionD = 'Roca Tarpeya') or (SubEstacionD = 'Presidente Medina') or (SubEstacionD = 'INCES') 
+													or (SubEstacionD = 'Roosevelt') or (SubEstacionD = 'La Bandera') or (SubEstacionD = 'Los Ilustres')));
+													MostrarSubEstaciones := MostrarSubEstaciones + #13#10 + 'Boleto ' + NroBoletoUsuario + ': Desde ' + SubEstacionS + ' hasta ' + SubEstacionD;
+												
+													ElegirLinea := 1;
+													
+													write('Presiona Enter para continuar'); readln();
+												end;
+											0: nPagLinea := nPagLinea - 1;
+											2: nPagLinea := nPagLinea + 1;
+											end;				
+									end;
+								if nPagLinea = 8 then
+									begin
+										clrscr;
+										writeln('-------------                                                         ');
+										writeln('| CABLETREN |                                                         ');
+										writeln('----------------------------------------------------------------------');
+										writeln('|-Petare 2        |-5 de Julio     |-24 de Julio     |-Warairarepano |');
+										writeln('|-19 de Abril     |                |                 |               |');
+										writeln('----------------------------------------------------------------------');
+										writeln('Si desea utilizar su boleto ', i, ' para viajar en esta linea presione 1');
+										writeln('Si por el contrario desea ver otra linea junto son sus subestaciones');
+										writeln('Presione 0 para ir a la linea anterior: '); readln(OpcionUsuario);
+										
+										case OpcionUsuario of
+											1:begin
+													writeln('Para utilizar su boleto ', i, ' en la linea Cabletren, debe ingresar ambas SubEstaciones');
+													repeat
+														writeln('(Debe escribirlo igual a como lo ve arriba, en caso de escribirlo mal tendra otra oportunidad.)');
+														write('Ingrese el nombre de la estacion de salida: '); readln(SubEstacionS);
+														write('Ahora ingrese el nombre de la estacion de destino: '); readln(SubEstacionD);
+
+													until (((SubEstacionS = 'Petare 2') or (SubEstacionS = '19 de Abril') or (SubEstacionS = '5 de Julio') or (SubEstacionS = '24 de Julio') 
+													or (SubEstacionS = 'Warairarepano')) 
+													and ((SubEstacionD = 'Petare 2') or (SubEstacionD = '19 de Abril') or (SubEstacionD = '5 de Julio') or (SubEstacionD = '24 de Julio') 
+													or (SubEstacionD = 'Warairarepano')));
+													MostrarSubEstaciones := MostrarSubEstaciones + #13#10 + 'Boleto ' + NroBoletoUsuario + ': Desde ' + SubEstacionS + ' hasta ' + SubEstacionD;
+												
+													ElegirLinea := 1;
+													
+													write('Presiona Enter para continuar'); readln();
+												end;
+											0: nPagLinea := nPagLinea - 1;
+											end;		
+									end;
+							end;
+		
+					end;
+				
+				clrscr;
+				writeln(MostrarSubEstaciones);
 				
 			end;
 		end;
