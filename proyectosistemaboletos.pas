@@ -8,31 +8,32 @@ var
 	MostrarSubestaciones : AnsiString;
 	OpcionUsuario, nBoletos, nBoletosTotal, i, TipoBoleto, nViajesBoleto, nPagLinea, ElegirLinea, 
 	n1, n2a, n2b, n3, n4a, n4b, n5, n6a, n6b, n7, n8a, n8b, n9a, n9b, n9c, n10a, n10b, n10c : integer;
-	MontoTotal : real;
+	MontoTotal, Pago, DiferenciaPago : real;
+
 
 begin
 	n1:= 0; n2a:= 0; n2b:= 0; n3:= 0; n4a:= 0; n4b:= 0; n5:= 0; n6a:= 0; n6b:= 0; n7:= 0;
 	n8a:= 0; n8b:= 0; n9a:= 0; n9b:= 0; n9c:= 0; n10a:= 0; n10b:= 0; n10c:= 0; nViajesBoleto:= 0;
 
 	writeln('Bienvenido a la estacion del metro de Caracas.');
-	writeln('Desea comprar boletos? Si=1 No=2');
+	writeln('Para comprar boletos ingrese 1.');
+	writeln('Para ver el sistema ingrese 2.');
+	writeln('Para cerrar el sistema ingrese 3.');
+	writeln('(Tanto para ver el Sistema como para cerrarlo, se necesita una contraseña de acceso)');
 	readln(OpcionUsuario);
 	
-	if ((OpcionUsuario <> 1) and (OpcionUsuario <> 2)) then
+	if ((OpcionUsuario <> 1) and (OpcionUsuario <> 2) and (OpcionUsuario <> 3)) then
 		begin
 			repeat
-				writeln('Ingrese una opcion valida. Si=1 No=2');
-				readln(OpcionUsuario);
-			until ((OpcionUsuario = 1) or (OpcionUsuario = 2));
+				writeln('Ingrese una opcion valida. Compra de Boletos=1 Ver Sistema=2 Cerrar Sistema=3');
+				writeln('(Tanto para ver el Sistema como para cerrarlo, se necesita una contraseña de acceso)');
+				write('Ingrese alguna opcion: '); readln(OpcionUsuario);
+			until ((OpcionUsuario = 1) or (OpcionUsuario = 2) or (OpcionUsuario = 3));
 		end;
 		
-	case OpcionUsuario of
-		2:begin
-				writeln('Gracias por usar el sistema, presione enter para salir.');
-				readln();
-				exit;
-			end;
-		1:begin
+	if OpcionUsuario = 1 then
+			begin
+				clrscr;
 				writeln('Ingrese los siguientes datos:');
 				write('Nombre: '); readln(Nombre);
 				write('Apellido: '); readln(Apellido);
@@ -86,8 +87,7 @@ begin
 								until ((TipoBoleto = 1) or (TipoBoleto = 2) or (TipoBoleto = 3) or (TipoBoleto = 4) or (TipoBoleto = 5) 
 								or (TipoBoleto = 6) or (TipoBoleto = 7) or (TipoBoleto = 8) or (TipoBoleto = 9) or (TipoBoleto = 10));
 							end;
-						
-						
+					
 						if (TipoBoleto = 1) or (TipoBoleto = 3) or (TipoBoleto = 5) or (TipoBoleto = 7) then
 							begin
 								case TipoBoleto of
@@ -112,23 +112,23 @@ begin
 											nViajesBoleto := 10;
 										end;
 									end;
-										
+									
 								writeln('Tu boleto numero ', i ,' es: ', NombreBoleto, ', con una cantidad de viajes de ', nViajesBoleto, ' en Metro.');
 							end
-						
+					
 						else
 							begin
 								if (TipoBoleto = 2) or (TipoBoleto = 4) or (TipoBoleto = 6) or (TipoBoleto = 8) then
 									begin
 										write('El boleto que ha seleccionado tiene cobertura tanto para metro como bus, por favor ingrese el tipo de viaje que desea (Metro: 1, Bus: 2): '); readln(OpcionUsuario);
-											
+										
 										if (OpcionUsuario <> 1) and (OpcionUsuario <> 2) then
 											begin
 												repeat
 													write('Opcion invalida, ingrese 1 para viaje en metro, o ingrese 2 para viaje en bus: '); readln(OpcionUsuario);
 												until (OpcionUsuario = 1) or (OpcionUsuario = 2);
 											end;
-											
+										
 										case TipoBoleto of
 											2: begin
 													NombreBoleto := 'Integrado';
@@ -156,12 +156,12 @@ begin
 													else nViajesBoleto := 20;
 												end;
 											end;
-											
+										
 										case OpcionUsuario of
 											1: Transporte:= 'Metro';
 											2: Transporte:= 'Bus';
 											end;
-												
+											
 										writeln('Tu boleto numero ', i ,' es: ', NombreBoleto, ', con una cantidad de viajes de ', nViajesBoleto, ' en ', Transporte, '.');
 									end
 								else
@@ -173,7 +173,7 @@ begin
 													write('Opcion invalida, ingrese una cantidad valida de viajes, ya sea 20, 30 o 40: '); readln(OpcionUsuario);
 												until (OpcionUsuario = 20) or (OpcionUsuario = 30) or (OpcionUsuario = 40);
 											end;
-										
+									
 										case TipoBoleto of
 											9:begin
 													NombreBoleto := 'MetroTarjeta';
@@ -197,10 +197,10 @@ begin
 							end;
 						write('Presiona Enter para continuar'); readln();
 					end;
-				
+			
 				MontoTotal := ((n1*1) + ((n2a+n2b)*1.5) + (n3*2) + ((n4a+n4b)*3) + (n5*10) + ((n6a+n6b)*15) + (n7*7.5) + ((n8a+n8b)*15) + ((n9a+n9b+n9c)*30) + ((n10a+n10b+n10c)*50));
 				nBoletosTotal := (n1 + n2a + n2b + n3 + n4a + n4b + n5 + n6a + n6b + n7 + n8a + n8b + n9a + n9b + n9c + n10a + n10b + n10c);
-					
+				
 				clrscr;
 				writeln('Aqui puede visualizar los boletos que posee en este momento y sus caracteristicas:');
 				writeln('');
@@ -237,7 +237,7 @@ begin
 				writeln('------------------------------------------------------------------------------');
 				writeln('                                                     | Total | ', MontoTotal:0:1, ' |   ', nBoletosTotal, '    |');
 				writeln('                                                     -------------------------');
-					
+				
 				write('Presiona Enter para continuar'); readln();
 				
 				clrscr;
@@ -571,10 +571,62 @@ begin
 							end;
 		
 					end;
-				
+					
 				clrscr;
+				writeln('Muestra de Factura');
+				writeln('Nombre: ', Nombre, ' ', Apellido);
+				writeln('C.I: ', Cedula);
 				writeln(MostrarSubEstaciones);
+				writeln(' ');
+				writeln('Total: ', MontoTotal:0:1);
+				writeln(' ');
+				writeln(' ');
+				writeln('Si esta seguro de su compra, presione 1 para proceder al pago.');
+				writeln('Si ha cambiado de opinion, presione 0 para salir del sistema.');
+				writeln('(Perdera todos los datos ingresados hasta el momento)');
+				write('Pago:1, Salir:2 = '); readln(OpcionUsuario);
 				
+				if ((OpcionUsuario <> 1) and (OpcionUsuario <> 2)) then
+					begin
+						repeat
+							write('Ingrese una opcion valida. Pago:1, Salir:2 = '); readln(OpcionUsuario);
+						until ((OpcionUsuario = 1) or (OpcionUsuario = 2));
+					end;
+				
+				
+				case OpcionUsuario of
+					1:begin
+							clrscr;
+							writeln('Total a pagar: ', MontoTotal:0:2);
+							write('Su Deposito:   '); readln(Pago);
+							
+							DiferenciaPago:= (MontoTotal - Pago);
+							
+							if DiferenciaPago < 0 then
+								begin
+									writeln('');
+									writeln('');
+									writeln('Su vuelto es de ', (DiferenciaPago*(-1)):0:1);
+								end
+							else if DiferenciaPago > 0 then
+								begin
+									repeat
+										writeln('');
+										writeln('');
+										writeln('Su pago fue incompleto, le falta por pagar ', DiferenciaPago:0:1);
+										MontoTotal:= DiferenciaPago;
+										writeln('Total a pagar: ', MontoTotal:0:2);
+										write('Su Deposito:   '); readln(Pago);
+										DiferenciaPago:= (MontoTotal - Pago);
+									until DiferenciaPago = 0;
+								end;
+								
+							write('Ha realizado el pago completo de sus boletos, presione Enter para continuar.'); readln();
+
+						end;
+					2:begin
+							writeln('Gracias por utilizar el sistema.');
+						end;
+					end;
 			end;
-		end;
 end.
